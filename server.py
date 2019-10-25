@@ -50,10 +50,11 @@ def upload_success():  # 按序读出分片内容，并写入新文件
 
 @app.route('/file/list', methods=['GET'])
 def file_list():
+    files_info = dict()
     files = os.listdir('./upload/')  # 获取文件目录
-    files = map(lambda x: x if isinstance(x, unicode) else x.decode('utf-8'),
-                files)  # 注意编码
-    return jsonify(files)
+    if files:
+        files_info['result'] = files
+    return jsonify(files_info)
 
 
 @app.route('/file/download/<filename>', methods=['GET'])
